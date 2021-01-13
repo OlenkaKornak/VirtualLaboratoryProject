@@ -1,0 +1,82 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<Domain.RDBMS.Entities.Statistics>
+
+<style>
+    #all_bodyl {
+        width: 83%;
+        height: 100%;
+        margin-left: 260px;
+    }
+    #header_div {
+        margin-right: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 20px;
+        background: #FFFF;
+        text-align: left;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    #lable {
+        font-family: Poppins;
+        color: #0C8524;
+    }
+
+    .button_ref {
+        font-family: Poppins;
+        margin-top: 23px;
+        height: 39px;
+        width: 150px;
+        font-family: Poppins;
+        color: #0C8524;
+        font-size: 15px;
+    }
+
+    #task_list {
+        margin-top: 10px;
+    }
+
+    #tasks_table {
+        font-size: 18px;
+        color: #707683;
+        width: 100%;
+        border-collapse: collapse;
+        border: none;
+        text-align: left;
+        background-color: #FFFF;
+    }
+</style>
+
+<div id="all_bodyl">
+    <div id="header_div">
+        <h1 id="lable">Statistics</h1>
+    </div>
+    <div id="task_list">
+        <table id="tasks_table">
+            <tr>
+                <th>Name</th>
+                <th>Level</th>
+                <th>Description</th>
+                <th>Grade</th>
+                <th>Actions</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="color: #323C47;">@item.Exercise.Name</td>
+                    <td>@item.Exercise.LevelId</td>
+                    <td>@item.Exercise.Description</td>
+                    <td>@item.Grade %</td>
+                    <td>
+                        <a class="button_ref" href="/Statistics/TaskOverview?statisticsId=@item.Id">Overview</a>
+                        <a class="button_ref" href="#">Graphic</a>
+                    </td>
+
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<nav aria-label="Tasks paging">
+    @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+</nav>

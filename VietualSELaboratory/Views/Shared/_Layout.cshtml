@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - VietualSELaboratory</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+</head>
+<body>
+    <div class="all_body">
+        <div id="side_bar">
+            <p id="app_name">Light learning of REQs</p>
+            <div id="refs">
+                <a id="tasks_ref" href="/Task/Index" style="color: #334D6E;"><i id="tasks_icon" class="fa fa-tasks" style="font-size:15px;color:#334D6E; margin-right: 5px; "></i>Tasks</a>
+                <br><br>
+                <a id="statistic_ref" href="/Statistics/Index"><i id="statistic_icon" class="fa fa-bar-chart" style="font-size:15px;color:#334D6E; margin-right: 5px;"></i>Statistics</a>
+                <hr style="border: 1px solid #18BF36; margin-top: 40px;  margin-bottom: 30px; margin-right: 15px;">
+                <a id="help_ref" href=""><i id="help_icon" class="fa fa-question-circle" style="font-size:15px;color:#334D6E; margin-right: 5px;"></i>Help</a>
+                <br><br>
+                <partial name="_LoginPartial"/>
+            </div>
+        </div>
+        <div id="main">
+            @RenderBody()
+        </div>
+    </div>
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

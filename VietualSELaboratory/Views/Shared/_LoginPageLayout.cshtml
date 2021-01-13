@@ -1,0 +1,46 @@
+﻿<style type="text/css">
+    li {
+        display: inline-block;
+    }
+
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - VietualSELaboratory</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+</head>
+<body>
+
+    <div>
+        <div>
+            <div style="background-color: #FFFF;">
+                <div >
+                    <ul style="margin-left: 1080px; color: #707683;">
+                        <li>
+                            <a href="/Identity/Account/Login" class="nav-link">Sign In</a>
+                        </li>
+                        <li>
+                            <a href="/Identity/Account/Register" class="nav-link">Sing Up</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div style="margin-top: 0px;">
+                        <div >
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

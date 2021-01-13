@@ -1,0 +1,122 @@
+﻿@using Domain.RDBMS.Entities
+@model VietualSELaboratory.ViewModel.ExerciseViewViewModel
+<!--<div class="form-group">
+    @Html.LabelFor(e => e.Exercise.Name)
+    @Html.DisplayTextFor(m => m.Exercise.Name)
+</div>-->
+<style type="text/css">
+    .t_name {
+        font-weight: bold;
+        padding-top: 10px;
+    }
+</style>
+<p style=" background-color: #FFFF; height: 69px; color: #0C8524; padding-left: 10px; font-size: 36px; padding-bottom: 15px; margin-left: 259px;">Task</p>
+
+<div style="background: #FFFF; font-size: 15px; margin-left: 257px; ">
+    <div class="form-group" style="
+        display: inline-block;
+        margin-left: 50px;
+        width: 350px;
+        background-color: #FFFF;
+        border-bottom: 1px solid #0C8524;
+        font-family: Poppins;
+        color: #323C47;
+    ">
+        @Html.LabelFor(e => e.Exercise.Name, new { @class = "t_name" })
+        <br>
+        @Html.DisplayTextFor(m => m.Exercise.Name)
+    </div>
+
+    <div class="form-group" style="
+        margin-left: 150px;
+        display: inline-block;
+        width: 350px;
+        background-color: #FFFF;
+        border-bottom: 1px solid #0C8524;
+        font-family: Poppins;
+        color: #323C47;">
+
+        @Html.LabelFor(e => e.Exercise.Level, new { @class = "t_name" })
+        <br>
+        @Html.DisplayTextFor(m => m.Exercise.Level.Name)
+    </div>
+
+    <div class="form-group" style="
+        margin-left: 51px;
+        width: 855px;
+        background-color: #FFFF;
+        border-bottom: 1px solid #0C8524;
+        font-family: Poppins;
+        color: #323C47;
+    ">
+
+        @Html.LabelFor(e => e.Exercise.Description, new { @class = "t_name" })
+        <br>
+        @Html.DisplayTextFor(m => m.Exercise.Description)
+    </div>
+
+    <div id="questions_block" style="margin-left: 51px;">
+        @foreach (Question question in Model.Questions)
+        {
+            <div class="question_space" style=" background-color: #E5E5E5;   height: 350px; width: 855px; ">
+                <p style="padding-left: 400px; font-family: Poppins; font-size: 15px; color: #323C47; font-weight: bold;">Question</p>
+                <div style="
+                    margin-left: 80px;
+                    width: 680px;
+                    background-color: #E5E5E5;
+                    border-bottom: 1px solid #0C8524;
+                    font-family: Poppins;
+                    color: #323C47;
+                    "><p>@question.Text</p>
+                </div>
+                <div id="answers" style="">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p style="margin-top:15px; padding-left: 100px; font-family: Poppins; font-size: 15px; color: #323C47; font-weight: bold;">Correct answers</p>
+                                <ul class="list-group correct">
+                               @foreach (var answer in question.Answers)
+                                {
+                                    if (answer.IsCorrect)
+                                    {
+                                        <li class="list-group-item" style="width: 400px; margin-bottom: 5px; height: 40px; background-color: #E5E5E5;
+                                                border: none;
+                                                border-bottom: 1px solid #0C8524;
+                                                font-family: Poppins;
+                                                color: #323C47;
+                                                font-size: 15px;">@answer.Text</li>
+                                    }
+                                }
+                                </ul>
+                            </div>
+                        <div class="col-md-6">
+                        <p style="margin-top: 15px; padding-left: 100px; font-family: Poppins; font-size: 15px; color: #323C47; font-weight: bold;">Incorrect answers</p>
+                        <ul class="list-group incorrect">
+                       @foreach (var answer in question.Answers)
+                        {
+                           if (!answer.IsCorrect)
+                           {
+                               <li class="list-group-item" style="width: 400px; margin-bottom: 5px; height: 40px; background-color: #E5E5E5;
+                                                    border: none;
+                                                    border-bottom: 1px solid #0C8524;
+                                                    font-family: Poppins;
+                                                    color: #323C47;
+                                                    font-size: 15px;">@answer.Text</li>
+                           }
+                        }
+                        </ul>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         }
+    </div>
+</div>
+
+
+
+
+
+
+

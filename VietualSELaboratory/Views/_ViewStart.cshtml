@@ -1,0 +1,16 @@
+﻿@using VietualSELaboratory.Utils
+@{
+    if (this.User.IsInRole(Constants.ApplicationRoles.Teacher))
+    {
+        Layout = "_Layout";
+    }
+    else if (this.User.IsInRole(Constants.ApplicationRoles.Student))
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_LoginPageLayout";
+    }
+
+}

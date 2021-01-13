@@ -1,0 +1,169 @@
+﻿@using Domain.RDBMS.Entities
+@using VietualSELaboratory.Utils
+@using ReflectionIT.Mvc.Paging
+
+@model VietualSELaboratory.ViewModel.ShowTasksViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<style type="text/css">
+    #main {
+        font-size: 28px;
+        margin-left: 135px;
+    }
+
+    #search_input {
+        width: 100%;
+        height: 35px;
+    }
+
+    #task_list {
+        margin-top: 65px;
+    }
+
+    #add_button {
+        height: 36px;
+        width: 145px;
+        font-size: 15px;
+        float: right;
+        color: #FFFFFF;
+        background-color: #0C8524;
+        margin-top: 12px;
+    }
+
+    #add_button {
+        text-decoration: none;
+        text-align: center;
+    }
+
+    #tasks_table {
+        font-size: 18px;
+        color: #707683;
+    }
+
+    #tasks_table {
+        width: 100%;
+        border-collapse: collapse;
+        border: none;
+        text-align: left;
+        background-color: #FFFF;
+    }
+
+    td, th {
+        padding: 0 25px 15px;
+    }
+
+    td {
+        padding: 20px;
+    }
+
+    th {
+        padding: 20px;
+    }
+
+    tr:first-child {
+        border-bottom: solid 2px #18BF36;
+    }
+
+    tr {
+        border-bottom: 1px solid #E9E9E9;
+    }
+
+    .button_ref {
+        font-family: Poppins;
+        margin-top: 23px;
+        height: 39px;
+        width: 150px;
+        font-family: Poppins;
+        color: #0C8524;
+        font-size: 15px;
+    }
+</style>
+
+<div id="main">
+    <input type="text" class="mainLoginInput" id="search_input" placeholder="&#61442; Search for a tasks">
+
+    <input type="button" id="filter_button" value="Filter" style="margin-left: 10px;">
+
+    @if (User.IsInRole(Constants.ApplicationRoles.Teacher))
+    {
+        <a href="/Task/Create" id="add_button" style="padding-top: 7px;">Add new task</a>
+    }
+
+     <div id="task_list">
+         <table id="tasks_table">
+             <tr>
+                 <th>Name</th>
+                 <th>Level</th>
+                 <th>Description</th>
+                 @if (User.IsInRole(Constants.ApplicationRoles.Student))
+                 {
+                     <th>Status</th>
+                 }
+                 <th>Actions</th>
+                 </tr>
+             @foreach (var item in Model.Exercises)
+             {
+         <tr>
+             <td style="color: #323C47;">@item.Name</td>
+             <td>@item.LevelId</td>
+             <td>@item.Description</td>
+
+             @if (Model.CompletedTasksIds.Contains(item.Id))
+             {
+                 @if (User.IsInRole(Constants.ApplicationRoles.Student))
+                 {
+                     <td>Completed</td>
+                     <td></td>
+                 }
+                 else
+                 {
+                     <td><a class="button_ref" href="/Task/View?taskId=@item.Id">View</a></td>
+                 }
+
+             }
+             else
+             {
+                 @if (User.IsInRole(Constants.ApplicationRoles.Student))
+                 {
+                     <td>New</td>
+                     <td>
+                         <a style="font-family: Poppins;
+                            margin-top: 23px;
+                            height: 39px;
+                            width: 150px;
+                            font-family: Poppins;
+                            color: #0C8524;
+                            font-size: 15px;
+                            margin-left: 10px;" href="/Task/Execute?taskId=@item.Id">Execute</a>
+                         
+                     </td>
+                 }
+                 else
+                 {
+                     <td>
+                         <a style="font-family: Poppins;
+                            margin-top: 23px;
+                            height: 39px;
+                            width: 150px;
+                            font-family: Poppins;
+                            color: #0C8524;
+                            font-size: 15px;
+                            " href="/Task/View?taskId=@item.Id">View</a>
+                         
+                     </td>
+
+
+                 }
+             }
+                 </tr>
+             }
+        </table>
+    </div>
+</div>
+
+    <nav aria-label="Tasks paging">
+        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model.Exercises })
+    </nav>

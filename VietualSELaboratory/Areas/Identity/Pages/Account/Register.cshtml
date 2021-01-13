@@ -1,0 +1,122 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LoginPageLayout.cshtml";
+}
+
+<style type="text/css">
+    #all_bodyl {
+        background-color: #FFFF;
+        width: 100%;
+        height: 100%;
+    }
+
+    #login_lable {
+        font-family: Poppins;
+        font-size: 26px;
+    }
+
+    #main_log {
+        background: #FFFF;
+        padding-top: 50px;
+        padding-left: 80px;
+    }
+
+    #apps_name {
+        font-family: Poppins;
+        font-size: 48px;
+        padding-left: 22px;
+    }
+
+    #name_line {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #18BF36;
+        margin: 1em 0;
+        padding: 0;
+        width: 505px;
+    }
+
+    #login_div {
+        margin-top: 80px;
+        margin-left: 80px;
+        background: #FFFF;
+        text-align: center;
+        width: 505px;
+        display: inline-block;
+    }
+
+    #login_name {
+        font-family: Poppins;
+        font-size: 26px;
+    }
+
+    #login_text, #password_text {
+        background-color: #FFFF;
+        border-bottom: 1px solid #18BF36;
+        font-family: Poppins;
+        width: 450px;
+        margin-top: 35px;
+        font-size: 20px;
+    }
+
+    #remember_lable {
+        background-color: #FFFF;
+        font-family: Poppins;
+        width: 450px;
+        margin-top: 35px;
+        font-size: 15px;
+    }
+
+    #login_button {
+        font-family: Poppins;
+        margin-top: 20px;
+        height: 29px;
+        width: 140px;
+        float: right;
+        margin-right: 25px;
+        background-color: #0C8524;
+        color: #FFFF;
+    }
+
+    #img_div {
+        float: right;
+        display: inline-block;
+    }
+</style>
+
+<div id="all_bodyl">
+    <div id="main_log">
+        <p id="apps_name">Light learning of REQs</p>
+        <hr id="name_line" />
+    </div>
+    <div id="login_div">
+        <form id="account" method="post">
+            <p id="login_lable">Register</p>
+            <div>
+                <input id="login_text" asp-for="Input.Email" placeholder="Email" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div>
+                <input id="password_text" asp-for="Input.Password" placeholder="Password" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div>
+                <input id="password_text" asp-for="Input.ConfirmPassword" placeholder="Confirm password" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div>
+                <button id="login_button" type="submit">Register</button>
+            </div>
+        </form>
+    </div>
+    <div id="img_div">
+        <img src="~/images/main_im.png" width="720" height="460">
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

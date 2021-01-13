@@ -1,0 +1,272 @@
+﻿@using Domain
+@using VietualSELaboratory.Extensions
+@model VietualSELaboratory.ViewModel.ExerciseViewModel
+
+
+@{
+    var taskNames = EnumExtensions.GetDescriptions(typeof(Enums.TaskName));
+}
+
+<style type="text/css">
+    .form-control {
+        border: none;
+        border-bottom: 1px solid #0C8524;
+    }
+</style>
+
+@if (Model.Exercise.Id == 0)
+{
+    <p id="create_text" style=" background-color: #FFFF; height: 69px; color: #0C8524; padding-left: 10px; font-size: 36px; padding-bottom: 15px; margin-left: 259px;">Create task</p> }
+else
+{
+    <p id="create_text">Редагування завдання (id: @Model.Exercise.Id)</p>
+    <h2></h2>
+}
+
+
+<form id="work_space" style="padding-left: 20px;">
+    <div id="task_name" style=" margin-top: 30px; margin-left: 80px; display:inline-block; height: 38px; width: 350px; border:none;  font-family: Poppins; color: #323C47;">
+        @Html.DropDownListFor(e => e.Exercise.Name, new SelectList(taskNames, "Value", "Text"), "Task name", new { @class = "form-control" })
+        @Html.ValidationMessageFor(e => e.Exercise.Name)
+    </div>
+
+    <div id="task_level" style=" margin-top: 30px;
+        margin-left: 50px;
+        display: inline-block;
+        height: 38px;
+        width: 350px;
+        background-color: #FFFF;
+        border-bottom: 1px solid #0C8524;
+        font-family: Poppins;
+        color: #323C47;
+    ">
+        @Html.DropDownListFor(e => e.Exercise.LevelId, new SelectList(Model.Levels, "Id", "Name"), "Task level", new { @class = "form-control" })
+        @Html.ValidationMessageFor(e => e.Exercise.LevelId)
+    </div>
+
+    <div id="task_description" style=" margin-top: 30px; margin-left: 80px; height: 38px; width: 760px; background-color: #FFFF; border-bottom: 1px solid #0C8524; font-family: Poppins; color: #323C47;">
+        @Html.TextBoxFor(m => m.Exercise.Description, new {placeholder="Description", @class = "form-control" })
+        @Html.ValidationMessageFor(e => e.Exercise.Description)
+    </div>
+
+    <div id="questions_block" class="question_space" style="background-color: #E5E5E5; margin-top: 30px; margin-left: 80px; height: 290px; width: 680px; font-size: 15px;">
+        <div id="question1" class="question_space" style="        background-color: #E5E5E5;
+        margin-top: 30px;
+        margin-left: 80px;
+        height: 290px;
+        width: 680px;
+        font-size: 15px;
+">
+            <input type="text" id="question" class="question_input" placeholder="Question" data-id="1" onkeyup="onQuestionTextEdit(this)" style=" margin-top: 30px; font-size:15px; height: 38px; width: 600px; border-bottom: 1px solid #0C8524; font-family: Poppins; color: #323C47; background-color: #E5E5E5;">
+            <div id="answers">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" name="correct" class="answer" placeholder="Correct answer" style="margin-top: 13px; margin-left: 35px; height: 38px; width: 200px; border-bottom: 1px solid #0C8524; font-size: 15px; font-family: Poppins; color: #323C47; background-color: #E5E5E5;">
+                            <button type="button" id="addcanswer" data-id="1" onclick="onAddCorrectAnswer(this)" style="margin-top: 23px; margin-left: 135px; height: 30px; font-size: 15px; width: 100px; font-family: Poppins; color: #323C47; background-color: #D3D4D5;">Add</button>
+                            <select class="list-group correct" style="margin-top: 13px; margin-left: 35px; height: 38px; width: 200px; border-bottom: 1px solid #0C8524; font-size: 15px; font-family: Poppins; color: #323C47; background-color: #E5E5E5;">
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="incorrect" class="answer" placeholder="Incorrect answer" style="margin-top: 13px; margin-left: 10px; height: 38px; width: 200px; font-size: 15px; border-bottom: 1px solid #0C8524; font-family: Poppins; color: #323C47; background-color: #E5E5E5;">
+                            <button type="button" id="addanswer" data-id="1" onclick="onAddIncorrectAnswer(this)" style="margin-top: 23px; margin-left: 110px; height: 30px; font-size: 15px; width: 100px; font-family: Poppins; color: #323C47; background-color: #D3D4D5;">Add</button>
+                            <select class="list-group incorrect" style="margin-top: 13px; margin-left: 10px; height: 38px; width: 200px; border-bottom: 1px solid #0C8524; font-size: 15px; font-family: Poppins; color: #323C47; background-color: #E5E5E5;">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<button type="button" class="btn btn-danger" data-id="1" onclick="deleteQuestion(this)">Delete question</button>-->
+        </div>
+    </div>
+
+    <button type="button" id="add_ques" style="        font-family: Poppins;
+        margin-top: 23px;
+        height: 39px;
+        width: 150px;
+        font-family: Poppins;
+        font-size: 15px;
+        color: #323C47;
+        background-color: #D3D4D5;
+        margin-left: 490px;">
+        Add question
+    </button>
+    <button type="button" id="sendRequestBtn" class="save_button" style="        font-family: Poppins;
+        margin-top: 23px;
+        height: 39px;
+        width: 150px;
+        font-family: Poppins;
+        color: #323C47;
+        background-color: #D3D4D5;
+        background-color: #0C8524;
+        color: #FFFF;
+        font-size: 15px;
+        margin-right: 190px;
+    ">
+        Create
+    </button>
+</form>
+
+<script>
+    var question = {
+        Id: 1,
+        Text: "",
+        Correct: [],
+        Incorrect: []
+    };
+
+    var viewModel = {
+        1: question
+    };
+
+
+    $(document).ready(function() {
+        var questionsBlock = $("#questions_block");
+
+
+        $("#add_ques").on("click",
+            function() {
+                var previousValue = parseInt(Object.keys(viewModel)[Object.keys(viewModel).length - 1]);
+                var nextId = previousValue ? previousValue + 1 : 1;
+
+                questionsBlock.append(
+                    "<div id='question" +
+                    nextId +
+                    "' class='question_space'>" +
+                    "<input type='text' class='question_input' placeholder='Question' data-id='1' onkeyup='onQuestionTextEdit(this)'>" +
+                    "<div id='answers'>" +
+                    "<div class='container'>" +
+                    "<div class='row'>" +
+                    "<div class='col-md-6'>" +
+                    "<input type='text' name='correct' class='answer' placeholder='Correct answer' > " +
+                    "<button type='button' class='btn btn-success' data-id='" + nextId + "' onclick='onAddCorrectAnswer(this)'>Add</button>" +
+                    "<ul class='list-group correct'></ul>" +
+                    "</div>" +
+                    "<div class='col-md-6'>" +
+                    "<input type='text' name='incorrect' class='answer' placeholder='Answer'>" +
+                    "<button type='button' class='btn btn-success' data-id='" + nextId + "' onclick='onAddIncorrectAnswer(this)'>Add</button>" +
+                    "<ul class='list-group incorrect'></ul>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>" +
+                    "<button type='button' class='btn btn-danger' data-id='" + nextId + "' onclick='deleteQuestion(this)'>Delete question</button>" +
+                    "</div>"
+                );
+
+                var newQuestion = {
+                    Id: nextId,
+                    Text: "",
+                    Correct: [],
+                    Incorrect: []
+                };
+
+                viewModel[nextId] = newQuestion;
+                console.log(viewModel);
+            });
+
+        $("#sendRequestBtn").on("click",
+            function () {
+
+                var data = {};
+                data['QuestionViewModels'] = Object.values(viewModel);
+                data['Exercise'] = getExerciseData();
+
+
+                $.ajax({
+                    url: "/Task/Save",
+                    dataType: 'text',
+                    cache: false,
+                    method: "POST",
+                    data: data,
+                    success: function () {
+                        console.log("here");
+                        var url = '@Url.Action("Index", "Task")';
+                        window.location.href = url;
+                    },
+                    error: function (e) {
+                        console.log("error");
+                        console.log(e);
+                    }
+                });
+            });
+    });
+
+    function getExerciseData() {
+        return data = {
+            Name: $("#Exercise_Name").val(),
+            LevelId: $("#Exercise_LevelId").val(),
+            Description: $("#Exercise_Description").val()
+        }
+    }
+
+    function deleteQuestion(e) {
+        var id = $(e).data("id");
+        delete viewModel[id];
+        $("#question" + id).remove();
+        console.log(viewModel);
+    }
+
+    function onAddCorrectAnswer(e) {
+        var id = $(e).data("id");
+        var text = $("#question" + id).find("input[name='correct']").val();
+
+        if (!text) {
+            return;
+        }
+
+        $("#question" + id).find("input[name='correct']").val("");
+        $("#question" + id).find("select.correct").append("<option class='list-group-item'>" + text + "</option>");
+
+        viewModel[id].Correct.push(text);
+        console.log(viewModel);
+    }
+
+    function onAddIncorrectAnswer(e) {
+        var id = $(e).data("id");
+        var text = $("#question" + id).find("input[name='incorrect']").val();
+
+        if (!text) {
+            return;
+        }
+
+        $("#question" + id).find("input[name='incorrect']").val("");
+        $("#question" + id).find("select.incorrect").append("<option class='list-group-item'>" + text + "</option>");
+
+        viewModel[id].Incorrect.push(text);
+        console.log(viewModel);
+    }
+
+    function onQuestionTextEdit(e) {
+        var id = $(e).data("id");
+        var text = e.value;
+        viewModel[id].Text = text;
+        console.log(viewModel);
+    }
+
+    function checkViewModel() {
+        var errors = [];
+
+        if (Object.keys(viewModel).length == 0) {
+            errors.push("Завдання не має жодного питання");
+        }
+
+        for (var key in viewModel) {
+            var value = viewModel[key];
+
+            if (!value.Text) {
+                errors.push("Вкажіть заголовок для питання #" + key);
+            }
+
+            if (value.Correct.length = 0) {
+                errors.push("Питання #" + key + "не має жодної правильної відповіді");
+            }
+        }
+
+        return errors;
+    }
+</script>
+
+
+
+
